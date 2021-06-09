@@ -3,7 +3,7 @@ import { QRCodeModes } from "./qr_code_modes.js";
 import { BitHandlingUtility } from "./bit_handling_util.js";
 import { qrVersionDatabase } from "./qr_version_database.js";
 import { characterCountIndicatorLength } from "./character_count_indicator_length.js";
-import {ReedSolomon} from './reed_solomon.ts';
+import { ReedSolomon } from "./reed_solomon.js";
 
 const bitHandlingUtilty = new BitHandlingUtility();
 export class QRCode {
@@ -166,24 +166,22 @@ export class QRCode {
       this.final_data_bit_stream = this.final_data_bit_stream + "11101100";
   }
 
-  
-
-  convertStringBitstreamToArrayBytes(){
-      let arr = [];
-      for(let i = 0;i<this.final_data_bit_stream.length;i+=8){
-        let currentByte = this.final_data_bit_stream.substring(i,i+8);
-        var digit = parseInt(currentByte, 2);
-        arr.push(digit);  
-      }
-      this.finalByteArray = arr;
+  convertStringBitstreamToArrayBytes() {
+    let arr = [];
+    for (let i = 0; i < this.final_data_bit_stream.length; i += 8) {
+      let currentByte = this.final_data_bit_stream.substring(i, i + 8);
+      var digit = parseInt(currentByte, 2);
+      arr.push(digit);
+    }
+    this.finalByteArray = arr;
   }
 
-  addEccAndInterleave(){
-        let tatti = ReedSolomon.addEccAndInterleave(this.finalByteArray,this);
-        console.log(tatti);
-    }
-
-  
+  addEccAndInterleave() {
+    this.finalByteArray = ReedSolomon.addEccAndInterleave(
+      this.finalByteArray,
+      this
+    );
+  }
 }
 
 let qr = new QRCode("123456789123456789123456789", "Q");
