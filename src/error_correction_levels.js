@@ -1,7 +1,7 @@
 export const ErrorCorrectionLevels = {
-    "LOW": 0,
-    "MEDIUM": 1,
-    "QUARTILE": 2,
-    "HIGH": 3
+    "L": 0,
+    "M": 1,
+    "Q": 2,
+    "H": 3
 };
 Object.freeze(ErrorCorrectionLevels);
